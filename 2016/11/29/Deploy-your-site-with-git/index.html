@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="License annocement:This article was copied from Github Deploy your site with gitThis gist assumes:  you have a local git repo with an online remote repository (github / bitbucket etc) and a cloud serv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploy your site with git">
+<meta property="og:url" content="http://yoursite.com/2016/11/29/Deploy-your-site-with-git/index.html">
+<meta property="og:site_name" content="THS.IM">
+<meta property="og:description" content="License annocement:This article was copied from Github Deploy your site with gitThis gist assumes:  you have a local git repo with an online remote repository (github / bitbucket etc) and a cloud serv">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-28T18:06:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deploy your site with git">
+<meta name="twitter:description" content="License annocement:This article was copied from Github Deploy your site with gitThis gist assumes:  you have a local git repo with an online remote repository (github / bitbucket etc) and a cloud serv">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/29/Deploy-your-site-with-git/"/>
+
+
+
+
+
+  <title>Deploy your site with git | THS.IM</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">THS.IM</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/Deploy-your-site-with-git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ralken">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panda.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="THS.IM">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Deploy your site with git</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-29T02:04:36+08:00">
+                2016-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2016/11/29/Deploy-your-site-with-git/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2016/11/29/Deploy-your-site-with-git/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>License annocement:<br>This article was copied from <a href="https://gist.githubusercontent.com/oodavid/1809044/raw/ba8d01c411c40c2d204aa0eda93f72bea757b5d3/README.md" target="_blank" rel="external">Github</a></p>
+<h1 id="Deploy-your-site-with-git"><a href="#Deploy-your-site-with-git" class="headerlink" title="Deploy your site with git"></a>Deploy your site with git</h1><p>This gist assumes:</p>
+<ul>
+<li>you have a local git repo</li>
+<li>with an online remote repository (github / bitbucket etc)</li>
+<li>and a cloud server (Rackspace cloud / Amazon EC2 etc)<ul>
+<li>your (PHP) scripts are served from /var/www/html/</li>
+<li>your webpages are executed by apache</li>
+<li>apache’s home directory is /var/www/ </li>
+<li><strong><em>(this describes a pretty standard apache setup on Redhat / Ubuntu / CentOS / Amazon AMI etc)</em></strong></li>
+</ul>
+</li>
+</ul>
+<p><strong><em>you should be able to do the same with Java, Perl, RoR, JSP etc. however you’ll need to recreate the (rather simple) PHP script</em></strong></p>
+<h1 id="1-On-your-local-machine"><a href="#1-On-your-local-machine" class="headerlink" title="1 - On your local machine"></a>1 - On your local machine</h1><p><em>Here we add the deployment script and push it to the origin, the deployment script runs git commands to PULL from the origin thus updating your server</em></p>
+<h2 id="Grab-a-deployment-script-for-your-site"><a href="#Grab-a-deployment-script-for-your-site" class="headerlink" title="Grab a deployment script for your site"></a>Grab a deployment script for your site</h2><p>See <a href="#file-deploy-php">deploy.php</a></p>
+<h2 id="Add-commit-and-push-this-to-github"><a href="#Add-commit-and-push-this-to-github" class="headerlink" title="Add, commit and push this to github"></a>Add, commit and push this to github</h2><pre><code>git add deploy.php
+git commit -m &apos;Added the git deployment script&apos;
+git push -u origin master
+</code></pre><h1 id="2-On-your-server"><a href="#2-On-your-server" class="headerlink" title="2 - On your server"></a>2 - On your server</h1><p><em>Here we install and setup git on the server, we also create an SSH key so the server can talk to the origin without using passwords etc</em></p>
+<h2 id="Install-git…"><a href="#Install-git…" class="headerlink" title="Install git…"></a>Install git…</h2><p>After you’ve installed git, make sure it’s a relatively new version - old scripts quickly become problematic as github / bitbucket / whatever will have the latests and greatest, if you don’t have a recent version you’ll need to figure out how to upgrade it :-)</p>
+<pre><code>git --version
+</code></pre><h3 id="…on-CentOS-5-6"><a href="#…on-CentOS-5-6" class="headerlink" title="…on CentOS 5.6"></a>…on CentOS 5.6</h3><pre><code># Add a nice repo
+rpm -Uvh http://repo.webtatic.com/yum/centos/5/latest.rpm
+# Install git
+yum install --enablerepo=webtatic git-all
+</code></pre><h3 id="…using-generic-yum"><a href="#…using-generic-yum" class="headerlink" title="…using generic yum"></a>…using generic yum</h3><pre><code>sudo yum install git-core
+</code></pre><h2 id="Setup-git"><a href="#Setup-git" class="headerlink" title="Setup git"></a>Setup git</h2><pre><code>git config --global user.name &quot;Server&quot;
+git config --global user.email &quot;server@server.com&quot;
+</code></pre><h2 id="Create-an-ssh-directory-for-the-apache-user"><a href="#Create-an-ssh-directory-for-the-apache-user" class="headerlink" title="Create an ssh directory for the apache user"></a>Create an ssh directory for the apache user</h2><pre><code>sudo mkdir /var/www/.ssh
+sudo chown -R apache:apache /var/www/.ssh/
+</code></pre><h2 id="Generate-a-deploy-key-for-apache-user"><a href="#Generate-a-deploy-key-for-apache-user" class="headerlink" title="Generate a deploy key for apache user"></a>Generate a deploy key for apache user</h2><pre><code>sudo -Hu apache ssh-keygen -t rsa # choose &quot;no passphrase&quot;
+sudo cat /var/www/.ssh/id_rsa.pub
+</code></pre><h1 id="3-On-your-origin-github-bitbucket"><a href="#3-On-your-origin-github-bitbucket" class="headerlink" title="3 - On your origin (github / bitbucket)"></a>3 - On your origin (github / bitbucket)</h1><p><em>Here we add the SSH key to the origin to allow your server to talk without passwords. In the case of GitHub we also setup a post-receive hook which will automatically call the deploy URL thus triggering a PULL request from the server to the origin</em></p>
+<h2 id="GitHub-instructions"><a href="#GitHub-instructions" class="headerlink" title="GitHub instructions"></a>GitHub instructions</h2><h3 id="Add-the-SSH-key-to-your-user"><a href="#Add-the-SSH-key-to-your-user" class="headerlink" title="Add the SSH key to your user"></a>Add the SSH key to your user</h3><ol>
+<li><a href="https://github.com/settings/ssh" target="_blank" rel="external">https://github.com/settings/ssh</a></li>
+<li>Create a new key</li>
+<li>Paste the deploy key you generated on the server</li>
+</ol>
+<h3 id="Set-up-service-hook"><a href="#Set-up-service-hook" class="headerlink" title="Set up service hook"></a>Set up service hook</h3><ol>
+<li><a href="https://github.com/oodavid/server.com/admin/hooks" target="_blank" rel="external">https://github.com/oodavid/server.com/admin/hooks</a></li>
+<li>Select the <strong>Post-Receive URL</strong> service hook</li>
+<li>Enter the URL to your deployment script - <a href="http://server.com/deploy.php" target="_blank" rel="external">http://server.com/deploy.php</a></li>
+<li>Click <strong>Update Settings</strong></li>
+</ol>
+<h2 id="Bitbucket-instructions"><a href="#Bitbucket-instructions" class="headerlink" title="Bitbucket instructions"></a>Bitbucket instructions</h2><h3 id="Add-the-SSH-key-to-your-account"><a href="#Add-the-SSH-key-to-your-account" class="headerlink" title="Add the SSH key to your account"></a>Add the SSH key to your account</h3><ol>
+<li><a href="https://bitbucket.org/account/ssh-keys/" target="_blank" rel="external">https://bitbucket.org/account/ssh-keys/</a></li>
+<li>Create a new key</li>
+<li>Paste the deploy key you generated on the server</li>
+</ol>
+<h3 id="Set-up-service-hook-1"><a href="#Set-up-service-hook-1" class="headerlink" title="Set up service hook"></a>Set up service hook</h3><ol>
+<li>Go to: Repo &gt; Admin &gt; Services</li>
+<li>Select “POST”</li>
+<li>Add the URL to your deployment script - <a href="http://server.com/deploy.php" target="_blank" rel="external">http://server.com/deploy.php</a></li>
+<li>Save</li>
+</ol>
+<p><strong><em>Thanks to DrewAPicture in the comments for this one</em></strong></p>
+<h1 id="4-On-the-Server"><a href="#4-On-the-Server" class="headerlink" title="4 - On the Server"></a>4 - On the Server</h1><p><em>Here we clone the origin repo into a chmodded /var/www/html folder</em></p>
+<h2 id="Pull-from-origin"><a href="#Pull-from-origin" class="headerlink" title="Pull from origin"></a>Pull from origin</h2><pre><code>sudo chown -R apache:apache /var/www/html
+sudo -Hu apache git clone git@github.com:you/server.git /var/www/html
+</code></pre><h1 id="Rejoice"><a href="#Rejoice" class="headerlink" title="Rejoice!"></a>Rejoice!</h1><p>Now you’re ready to go :-)</p>
+<h2 id="Some-notes"><a href="#Some-notes" class="headerlink" title="Some notes"></a>Some notes</h2><ul>
+<li>Navigate the the deployment script to trigger a pull and see the output:<ul>
+<li><a href="http://server.com/deploy.php" target="_blank" rel="external">http://server.com/deploy.php</a></li>
+<li><strong><em>this is useful for debugging too ;-)</em></strong></li>
+<li>When you push to GitHub your site will automatically ping the above url (and pull your code)</li>
+<li>When you push to Bitbucket you will need to manually ping the above url</li>
+<li>It would be trivial to setup another repo on your server for different branches (develop, release-candidate etc) - repeat most of the steps but checkout a branch after pulling the repo down</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a href="https://gist.github.com/1105010" target="_blank" rel="external">Build auto-deploy with php and git(hub) on an EC2 Amazon AMI instance</a> - who in turn referenced:<ul>
+<li><a href="https://github.com/rsms/ec2-webapp/blob/master/INSTALL.md#readme" target="_blank" rel="external">ec2-webapp / INSTALL.md</a></li>
+<li><a href="http://writing.markchristian.org/how-to-deploy-your-code-from-github-automatic" target="_blank" rel="external">How to deploy your code from GitHub automatically</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/21/Markdown-Commands-Get-Started/" rel="prev" title="Markdown Commands Get Started">
+                Markdown Commands Get Started <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/panda.png"
+               alt="Ralken" />
+          <p class="site-author-name" itemprop="name">Ralken</p>
+           
+              <p class="site-description motion-element" itemprop="description">Let the world knows me better.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploy-your-site-with-git"><span class="nav-number">1.</span> <span class="nav-text">Deploy your site with git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-On-your-local-machine"><span class="nav-number">2.</span> <span class="nav-text">1 - On your local machine</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grab-a-deployment-script-for-your-site"><span class="nav-number">2.1.</span> <span class="nav-text">Grab a deployment script for your site</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-commit-and-push-this-to-github"><span class="nav-number">2.2.</span> <span class="nav-text">Add, commit and push this to github</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-On-your-server"><span class="nav-number">3.</span> <span class="nav-text">2 - On your server</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-git…"><span class="nav-number">3.1.</span> <span class="nav-text">Install git…</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#…on-CentOS-5-6"><span class="nav-number">3.1.1.</span> <span class="nav-text">…on CentOS 5.6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#…using-generic-yum"><span class="nav-number">3.1.2.</span> <span class="nav-text">…using generic yum</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Setup-git"><span class="nav-number">3.2.</span> <span class="nav-text">Setup git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-an-ssh-directory-for-the-apache-user"><span class="nav-number">3.3.</span> <span class="nav-text">Create an ssh directory for the apache user</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generate-a-deploy-key-for-apache-user"><span class="nav-number">3.4.</span> <span class="nav-text">Generate a deploy key for apache user</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-On-your-origin-github-bitbucket"><span class="nav-number">4.</span> <span class="nav-text">3 - On your origin (github / bitbucket)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub-instructions"><span class="nav-number">4.1.</span> <span class="nav-text">GitHub instructions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-the-SSH-key-to-your-user"><span class="nav-number">4.1.1.</span> <span class="nav-text">Add the SSH key to your user</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-up-service-hook"><span class="nav-number">4.1.2.</span> <span class="nav-text">Set up service hook</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bitbucket-instructions"><span class="nav-number">4.2.</span> <span class="nav-text">Bitbucket instructions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-the-SSH-key-to-your-account"><span class="nav-number">4.2.1.</span> <span class="nav-text">Add the SSH key to your account</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-up-service-hook-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">Set up service hook</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-On-the-Server"><span class="nav-number">5.</span> <span class="nav-text">4 - On the Server</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pull-from-origin"><span class="nav-number">5.1.</span> <span class="nav-text">Pull from origin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rejoice"><span class="nav-number">6.</span> <span class="nav-text">Rejoice!</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-notes"><span class="nav-number">6.1.</span> <span class="nav-text">Some notes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sources"><span class="nav-number">6.2.</span> <span class="nav-text">Sources</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 &mdash; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ralken</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbBOvvI';
+      var conf = '816adfb164b1594d4b1480ed80f67865';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
