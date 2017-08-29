@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="THS.IM">
 <meta property="og:description" content="Android开发之命名规范 1.项目规范1.1 项目结构新的项目构建需要遵循Gradle项目结构，可以在官方Gradle插件用户向导了解详细信息. 通过这个项目学习更多用法。 1.2 命名方式1.2.1 类的命名类的命名应按照驼峰式结构,如：UpperCamelCase. 对于继承自Android系统组件的类，需要以组件名称作为文件名结尾,例如：SignInActivity, RegisterF">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-29T06:20:02.000Z">
+<meta property="og:updated_time" content="2017-08-29T07:22:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android开发之命名规范">
 <meta name="twitter:description" content="Android开发之命名规范 1.项目规范1.1 项目结构新的项目构建需要遵循Gradle项目结构，可以在官方Gradle插件用户向导了解详细信息. 通过这个项目学习更多用法。 1.2 命名方式1.2.1 类的命名类的命名应按照驼峰式结构,如：UpperCamelCase. 对于继承自Android系统组件的类，需要以组件名称作为文件名结尾,例如：SignInActivity, RegisterF">
@@ -555,12 +555,58 @@
 <p>因为他们本身已经被放置在<code>menu</code>目录中，所以菜单文件名中不需要包含<code>menu</code>关键字。</p>
 <h3 id="1-2-2-4-Values"><a href="#1-2-2-4-Values" class="headerlink" title="1.2.2.4 Values"></a>1.2.2.4 Values</h3><p>values目录下的资源文件名称应当为复数形式，例如：<code>strings.xml, styles.xml, colors.xml, dimens.xml, attrs.xlm</code></p>
 <h3 id="1-3-XML资源命名"><a href="#1-3-XML资源命名" class="headerlink" title="1.3 XML资源命名"></a>1.3 XML资源命名</h3><h4 id="1-3-1-ViewId的命名"><a href="#1-3-1-ViewId的命名" class="headerlink" title="1.3.1 ViewId的命名"></a>1.3.1 ViewId的命名</h4><p>布局文件中，View Id使用小写字母m开头, 例如：<code>mConfirmBtn</code>, <code>mSubmitBtn</code>, <code>mCancelView</code>。</p>
-<p>对应地，在Activity或Fragment声明中，直接声明View变量名称为ViewId使其保持一致。例如：</p>
+<p>相应地，在Activity或Fragment声明中，直接声明View变量名称为ViewId使其保持一致。例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Button mConfirmBtn</div><div class="line">Button mSubmitBtn;</div><div class="line">ImageView mCancelView;</div></pre></td></tr></table></figure>
+<p> 很多规范建议使用<code>控件类型_</code>开头如<code>text_sign_in</code>，也有不少人建议<code>loginButton</code>这种命名方式。但是这种方式：</p>
 <ul>
-<li>很多规范建议使用<code>控件类型_</code>开头如<code>text_</code>，也有不少人建议<code>login</code></li>
+<li>引入到代码中需要经过另一层对应关系才能找到</li>
+<li>下划线过多的话会对代码阅读产生干扰</li>
+<li>某些第三方库如AndroidAnnotation会直接通过布局中的viewId按照同名查找自动赋值给类变量，增加了手动维护的成本。</li>
 </ul>
-<h3 id="1-4-类成员和方法的命名"><a href="#1-4-类成员和方法的命名" class="headerlink" title="1.4 类成员和方法的命名"></a>1.4 类成员和方法的命名</h3>
+<h4 id="1-3-2-Strings-字符串命名"><a href="#1-3-2-Strings-字符串命名" class="headerlink" title="1.3.2 Strings 字符串命名"></a>1.3.2 Strings 字符串命名</h4><ol>
+<li><p>一般情况下<strong><code>Strings</code></strong> 命名需要以其所在模块的业务含义单词作为前缀，例如：<code>registration_mobile_hint</code>,<code>login_password_required_hint</code>。</p>
+<p>另外每个模块需要连续集中放置，不可随意在文件尾部随意追加。</p>
+</li>
+<li>如果字符串<strong>不属于</strong>任何一个业务模块，则需要将其归类，按照以下约定命名：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Prefix</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>error_</code></td>
+<td>An error message</td>
+</tr>
+<tr>
+<td><code>msg_</code></td>
+<td>A regular information message</td>
+</tr>
+<tr>
+<td><code>title_</code></td>
+<td>A title, i.e. a dialog title</td>
+</tr>
+<tr>
+<td><code>action_</code></td>
+<td>An action such as “Save” or “Create”</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1-3-2-主题和样式"><a href="#1-3-2-主题和样式" class="headerlink" title="1.3.2 主题和样式"></a>1.3.2 主题和样式</h4><p>以大写字母开头的<strong>驼峰式（UpperCamelCase）</strong>来命名：<code>ClickableImageLayoutStyle</code></p>
+<h3 id="1-4-类成员和方法的命名"><a href="#1-4-类成员和方法的命名" class="headerlink" title="1.4 类成员和方法的命名"></a>1.4 类成员和方法的命名</h3><h4 id="1-4-1-成员变量的命名"><a href="#1-4-1-成员变量的命名" class="headerlink" title="1.4.1 成员变量的命名"></a>1.4.1 成员变量的命名</h4><ul>
+<li>POJO类成员：小写字母开头的小驼峰式风格，例如:<code>priavte int age;</code></li>
+<li>其他类：均以m字母开头，例如：<code>private String mItemDescription</code></li>
+<li><p>方法内局部变量: 小写字母开头的小驼峰式风格。例如：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public double countPrice(int fruitCount) &#123;</div><div class="line">	int price = delegate.getPrice(); // NOT mPrice</div><div class="line">	return price * fruiteCount;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="1-4-1-方法命名和规范"><a href="#1-4-1-方法命名和规范" class="headerlink" title="1.4.1 方法命名和规范"></a>1.4.1 <font color="red">方法命名和规范</font></h4><h4 id="1-4-1-1-方法名和返回值"><a href="#1-4-1-1-方法名和返回值" class="headerlink" title="1.4.1.1 方法名和返回值"></a>1.4.1.1 方法名和返回值</h4><p>方法名称是以小写字母开头的驼峰式结构。定义方法时需要有<strong><code>明确的作用域</code></strong>，<strong><code>根据名称即可知其作用</code></strong>。方法的名称需要与其返回值对应，例如<code>public void createFruit()</code>显然是不合理的。create是创建的意思，那么就应该具有返回值而非void，而且创建出来的结果也应当是Fruit而不是Apple，最后作用域是否应当为<code>public</code>也需要按照对象的实际场景来确定。相反地，<code>private Fruit onDestroy()</code>的返回值也没有任何意义。</p>
+<h4 id="1-4-1-2-方法参数"><a href="#1-4-1-2-方法参数" class="headerlink" title="1.4.1.2 方法参数"></a>1.4.1.2 方法参数</h4><p>功能性的方法应当尽可能通过参数传入完成单一功能。尽可能少地引用类的成员变量，达到方法内聚的目的。</p>
+<p>对于未引用成员变量的方法，应当<strong>优先</strong>考虑声明为<code>static</code>。</p>
+<h4 id="1-4-1-3-方法入参-TODO"><a href="#1-4-1-3-方法入参-TODO" class="headerlink" title="1.4.1.3 方法入参 -TODO"></a>1.4.1.3 方法入参 -TODO</h4>
       
     </div>
     
@@ -716,7 +762,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android开发之命名规范"><span class="nav-number">1.</span> <span class="nav-text">Android开发之命名规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-项目规范"><span class="nav-number">1.1.</span> <span class="nav-text">1.项目规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-项目结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-命名方式"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 命名方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-类的命名"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.2.1 类的命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-资源文件"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.2.2 资源文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-2-图片资源"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.2.1.2 图片资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-2-布局文件"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.2.2.2 布局文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-3-菜单"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.2.2.3 菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-4-Values"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.2.2.4 Values</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-XML资源命名"><span class="nav-number">1.1.9.</span> <span class="nav-text">1.3 XML资源命名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-ViewId的命名"><span class="nav-number">1.1.9.1.</span> <span class="nav-text">1.3.1 ViewId的命名</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-类成员和方法的命名"><span class="nav-number">1.1.10.</span> <span class="nav-text">1.4 类成员和方法的命名</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android开发之命名规范"><span class="nav-number">1.</span> <span class="nav-text">Android开发之命名规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-项目规范"><span class="nav-number">1.1.</span> <span class="nav-text">1.项目规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-项目结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-命名方式"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 命名方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-类的命名"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.2.1 类的命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-资源文件"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.2.2 资源文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-2-图片资源"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.2.1.2 图片资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-2-布局文件"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.2.2.2 布局文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-3-菜单"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.2.2.3 菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-4-Values"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.2.2.4 Values</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-XML资源命名"><span class="nav-number">1.1.9.</span> <span class="nav-text">1.3 XML资源命名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-ViewId的命名"><span class="nav-number">1.1.9.1.</span> <span class="nav-text">1.3.1 ViewId的命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-Strings-字符串命名"><span class="nav-number">1.1.9.2.</span> <span class="nav-text">1.3.2 Strings 字符串命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-主题和样式"><span class="nav-number">1.1.9.3.</span> <span class="nav-text">1.3.2 主题和样式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-类成员和方法的命名"><span class="nav-number">1.1.10.</span> <span class="nav-text">1.4 类成员和方法的命名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-成员变量的命名"><span class="nav-number">1.1.10.1.</span> <span class="nav-text">1.4.1 成员变量的命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-方法命名和规范"><span class="nav-number">1.1.10.2.</span> <span class="nav-text">1.4.1 方法命名和规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-1-方法名和返回值"><span class="nav-number">1.1.10.3.</span> <span class="nav-text">1.4.1.1 方法名和返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-2-方法参数"><span class="nav-number">1.1.10.4.</span> <span class="nav-text">1.4.1.2 方法参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-3-方法入参-TODO"><span class="nav-number">1.1.10.5.</span> <span class="nav-text">1.4.1.3 方法入参 -TODO</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
