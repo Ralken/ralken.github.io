@@ -95,17 +95,17 @@
 
 
 
-<meta name="description" content="This document’s used to write down some practised work notes.  A useful android studio plugin that reminds developers to remember the ShortCut Key: Key-promoter  Android Studio plug-in for generating">
+<meta name="description" content="This document’s used to write down some practised work notes. 1. Android Studio Plugins A useful android studio plugin that reminds developers to remember the ShortCut Key: Key-promoter  Android Studi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pieces of work notes">
 <meta property="og:url" content="http://yoursite.com/2017/09/13/Pieces-of-work-notes/index.html">
 <meta property="og:site_name" content="THS.IM">
-<meta property="og:description" content="This document’s used to write down some practised work notes.  A useful android studio plugin that reminds developers to remember the ShortCut Key: Key-promoter  Android Studio plug-in for generating">
+<meta property="og:description" content="This document’s used to write down some practised work notes. 1. Android Studio Plugins A useful android studio plugin that reminds developers to remember the ShortCut Key: Key-promoter  Android Studi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T05:17:39.000Z">
+<meta property="og:updated_time" content="2017-09-13T10:56:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pieces of work notes">
-<meta name="twitter:description" content="This document’s used to write down some practised work notes.  A useful android studio plugin that reminds developers to remember the ShortCut Key: Key-promoter  Android Studio plug-in for generating">
+<meta name="twitter:description" content="This document’s used to write down some practised work notes. 1. Android Studio Plugins A useful android studio plugin that reminds developers to remember the ShortCut Key: Key-promoter  Android Studi">
 
 
 
@@ -377,7 +377,7 @@
 
       
         <p>This document’s used to write down some practised work notes.</p>
-<ol>
+<h3 id="1-Android-Studio-Plugins"><a href="#1-Android-Studio-Plugins" class="headerlink" title="1. Android Studio Plugins"></a>1. Android Studio Plugins</h3><ol>
 <li><p>A useful android studio plugin that reminds developers to remember the ShortCut Key: <a href="https://plugins.jetbrains.com/plugin/1003-key-promoter" target="_blank" rel="external"><strong><code>Key-promoter</code></strong></a></p>
 </li>
 <li><p>Android Studio plug-in for generating ButterKnife injections from selected layout XML. <a href="https://github.com/avast/android-butterknife-zelezny" target="_blank" rel="external"><strong><code>android-butterknife-zelezny</code></strong></a> and <a href="https://plugins.jetbrains.com/plugin/7369-android-butterknife-zelezny" target="_blank" rel="external"><strong><code>jetbrain here</code></strong></a></p>
@@ -385,7 +385,13 @@
 <li><p>More android studio plugins for android can be found <a href="https://plugins.jetbrains.com/search/androidstudio?correctionAllowed=true&amp;search=android" target="_blank" rel="external"><strong><code>here</code></strong></a></p>
 </li>
 </ol>
-
+<h3 id="2-Mind-Segments"><a href="#2-Mind-Segments" class="headerlink" title="2. Mind Segments"></a>2. Mind Segments</h3><ol>
+<li><p>RxJava + X 的实现原理： X返回处于等待状态(Object.wait())的线程中，待异步任务完成后唤醒(notify)并回调结果。此原理与之前开发BLE蓝牙功能的异步处理思想类似，使用Object.wait()和Object.notify()进行多任务的同步处理。简单示例：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">RequestFuture future = RequestFutre.newFuture();</div><div class="line">VolleyRequest request = VolleyRequest.newRequest(Method.GET, url, future);</div><div class="line"><span class="comment">//...</span></div><div class="line">RequestQueue.add(request);</div><div class="line"><span class="keyword">return</span> future.get();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> T <span class="title">doGet</span><span class="params">(Long timeoutMs)</span> <span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException </span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.mException != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ExecutionException(<span class="keyword">this</span>.mException);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.mResultReceived) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.mResult;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span>(timeoutMs == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">this</span>.wait(<span class="number">0L</span>);	<span class="comment">// 处于等待状态</span></div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(timeoutMs.longValue() &gt; <span class="number">0L</span>) &#123;</div><div class="line">                <span class="keyword">this</span>.wait(timeoutMs.longValue());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.mException != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ExecutionException(<span class="keyword">this</span>.mException);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(!<span class="keyword">this</span>.mResultReceived) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> TimeoutException();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.mResult;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">	<span class="comment">// 网络请求完成后会deliverResponse到该方法，从而唤醒Future线程</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(T response)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.mResultReceived = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">this</span>.mResult = response;</div><div class="line">        <span class="keyword">this</span>.notifyAll();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</code></pre>
       
     </div>
     
@@ -471,8 +477,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/panda.png"
@@ -518,6 +533,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Android-Studio-Plugins"><span class="nav-number">1.</span> <span class="nav-text">1. Android Studio Plugins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Mind-Segments"><span class="nav-number">2.</span> <span class="nav-text">2. Mind Segments</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
