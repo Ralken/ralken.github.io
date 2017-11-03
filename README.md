@@ -9,3 +9,6 @@ https://futurestud.io/tutorials/retrofit-replace-the-integrated-json-converter
 ### Medium: Custom Annotations with Retrofit 2
 https://medium.com/@andretietz/custom-annotations-with-retrofit-2-8701ca7ce102
 
+### Medium: A Better Architecture for Android Apps (with example codebase)
+https://medium.com/@bendlh/a-better-architecture-for-android-apps-e034284fae7a
+
