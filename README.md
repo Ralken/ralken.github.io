@@ -14,3 +14,7 @@ https://medium.com/@bendlh/a-better-architecture-for-android-apps-e034284fae7a
 
 ### Retrofit 2, converters and unwrapping json objects with RxJava
 https://blog.davidmedenjak.com/android/2016/07/12/retrofit-converter-unwrapping.html
+
+Rxjava: Flowable
+http://www.jianshu.com/p/ff8167c1d191
+
