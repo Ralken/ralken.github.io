@@ -20,3 +20,6 @@ http://www.jianshu.com/p/ff8167c1d191
 
 Classic RxJava docment in Chinese language:
 http://gank.io/post/560e15be2dca930e00da1083#toc_17
+
+RxLifecycle的替代方案
+http://www.jianshu.com/p/a6e6ec33925a
