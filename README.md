@@ -23,3 +23,6 @@ http://gank.io/post/560e15be2dca930e00da1083#toc_17
 
 RxLifecycle的替代方案
 http://www.jianshu.com/p/a6e6ec33925a
+
+StackOv: Migrate from RxAndroid 1.x to 2.x (RxJava included)
+https://stackoverflow.com/questions/40371315/migrate-from-rxandroid-1-x-to-2-x-rxjava-included
